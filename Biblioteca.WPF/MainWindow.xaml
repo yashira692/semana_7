@@ -1,0 +1,186 @@
+﻿<Window x:Class="Biblioteca.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Biblioteca" Height="660" Width="1000"
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Padding" Value="12,4"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+        </Style>
+    </Window.Resources>
+
+    <TabControl Margin="8">
+
+        <!-- ===== LIBROS ===== -->
+        <TabItem Header="Libros">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Buscar (título o autor):" VerticalAlignment="Center" Margin="4"/>
+                    <TextBox x:Name="txtBuscarLibro" Width="260"/>
+                    <Button Content="Buscar" Click="BuscarLibro_Click"/>
+                </StackPanel>
+                <Grid DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Título" Margin="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtTitulo" Grid.Column="1"/>
+                    <TextBlock Text="ISBN" Grid.Column="2" Margin="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtIsbn" Grid.Column="3"/>
+                    <TextBlock Text="Autor" Grid.Row="1" Margin="4" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="cmbAutor" Grid.Row="1" Grid.Column="1" DisplayMemberPath="Nombre" SelectedValuePath="AutorId"/>
+                    <TextBlock Text="Ejemplares" Grid.Row="1" Grid.Column="2" Margin="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtEjemplares" Grid.Row="1" Grid.Column="3"/>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Orientation="Horizontal">
+                        <Button Content="Insertar" Click="InsertarLibro_Click"/>
+                        <Button Content="Actualizar" Click="ActualizarLibro_Click"/>
+                        <Button Content="Eliminar" Click="EliminarLibro_Click"/>
+                        <Button Content="Limpiar" Click="LimpiarLibro_Click"/>
+                    </StackPanel>
+                </Grid>
+                <DataGrid x:Name="dgLibros" SelectionChanged="dgLibros_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
+                        <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="130"/>
+                        <DataGridTextColumn Header="Autor" Binding="{Binding AutorNombre}" Width="200"/>
+                        <DataGridTextColumn Header="Ejemplares" Binding="{Binding Ejemplares}" Width="90"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ===== SOCIOS ===== -->
+        <TabItem Header="Socios">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Buscar (nombre o DNI):" VerticalAlignment="Center" Margin="4"/>
+                    <TextBox x:Name="txtBuscarSocio" Width="260"/>
+                    <Button Content="Buscar" Click="BuscarSocio_Click"/>
+                </StackPanel>
+                <Grid DockPanel.Dock="Bottom" Margin="0,8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="DNI" Margin="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtDni" Grid.Column="1" MaxLength="8"/>
+                    <TextBlock Text="Nombre" Grid.Column="2" Margin="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtNombreSocio" Grid.Column="3"/>
+                    <TextBlock Text="Email" Grid.Row="1" Margin="4" VerticalAlignment="Center"/>
+                    <TextBox x:Name="txtEmail" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"/>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="4" Orientation="Horizontal">
+                        <Button Content="Insertar" Click="InsertarSocio_Click"/>
+                        <Button Content="Actualizar" Click="ActualizarSocio_Click"/>
+                        <Button Content="Eliminar" Click="EliminarSocio_Click"/>
+                        <Button Content="Limpiar" Click="LimpiarSocio_Click"/>
+                    </StackPanel>
+                </Grid>
+                <DataGrid x:Name="dgSocios" SelectionChanged="dgSocios_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="DNI" Binding="{Binding DNI}" Width="110"/>
+                        <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="250"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ===== PRÉSTAMO ===== -->
+        <TabItem Header="Préstamo">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Socio:" VerticalAlignment="Center" Margin="4"/>
+                    <ComboBox x:Name="cmbSocioPrestamo" Width="240" DisplayMemberPath="Nombre" SelectedValuePath="SocioId"/>
+                    <TextBlock Text="Libro:" VerticalAlignment="Center" Margin="12,4,4,4"/>
+                    <ComboBox x:Name="cmbLibroPrestamo" Width="300" DisplayMemberPath="Titulo"/>
+                    <Button Content="Agregar" Click="AgregarLibro_Click"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                    <Button Content="Quitar seleccionado" Click="QuitarLibro_Click"/>
+                    <Button Content="Registrar préstamo" Click="RegistrarPrestamo_Click"/>
+                </StackPanel>
+                <DataGrid x:Name="dgCarrito">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Libro a prestar" Binding="{Binding Titulo}" Width="*"/>
+                        <DataGridTextColumn Header="Autor" Binding="{Binding AutorNombre}" Width="220"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ===== DEVOLUCIÓN ===== -->
+        <TabItem Header="Devolución">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Socio:" VerticalAlignment="Center" Margin="4"/>
+                    <ComboBox x:Name="cmbSocioDev" Width="260" DisplayMemberPath="Nombre" SelectedValuePath="SocioId"/>
+                    <Button Content="Ver pendientes" Click="CargarPendientes_Click"/>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                    <TextBlock x:Name="txtMulta" Text="Multa: S/ 0.00" FontSize="16" FontWeight="Bold"
+                               VerticalAlignment="Center" Margin="8"/>
+                    <Button Content="Registrar devolución" Click="Devolver_Click"/>
+                </StackPanel>
+                <DataGrid x:Name="dgPendientes" SelectionChanged="dgPendientes_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Préstamo" Binding="{Binding PrestamoId}" Width="80"/>
+                        <DataGridTextColumn Header="Libro" Binding="{Binding LibroTitulo}" Width="*"/>
+                        <DataGridTextColumn Header="Fecha límite" Binding="{Binding FechaLimite, StringFormat=dd/MM/yyyy}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+
+        <!-- ===== REPORTE ===== -->
+        <TabItem Header="Reporte">
+            <DockPanel Margin="8">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                    <TextBlock Text="Desde:" VerticalAlignment="Center" Margin="4"/>
+                    <DatePicker x:Name="dpDesde" Margin="4"/>
+                    <TextBlock Text="Hasta:" VerticalAlignment="Center" Margin="12,4,4,4"/>
+                    <DatePicker x:Name="dpHasta" Margin="4"/>
+                    <Button Content="Generar reporte" Click="GenerarReporte_Click"/>
+                </StackPanel>
+                <DataGrid x:Name="dgReporte">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Préstamo" Binding="{Binding PrestamoId}" Width="80"/>
+                        <DataGridTextColumn Header="Socio" Binding="{Binding Socio}" Width="*"/>
+                        <DataGridTextColumn Header="Libro" Binding="{Binding Libro}" Width="*"/>
+                        <DataGridTextColumn Header="Fecha préstamo" Binding="{Binding FechaPrestamo, StringFormat=dd/MM/yyyy}" Width="120"/>
+                        <DataGridTextColumn Header="Fecha límite" Binding="{Binding FechaLimite, StringFormat=dd/MM/yyyy}" Width="110"/>
+                        <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="90"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
+</Window>

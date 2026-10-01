@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<connectionStrings>
+		<add name="BibliotecaDB"
+			 connectionString="Server=LAB1502-23;Database=BibliotecaDB;User Id=sa;Password=TU_CONTRASEÑA;TrustServerCertificate=True;"
+			 providerName="Microsoft.Data.SqlClient" />
+	</connectionStrings>
+</configuration>

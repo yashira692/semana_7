@@ -1,0 +1,15 @@
+﻿# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+
+# Paquetes y resultados
+packages/
+*.log
+TestResults/
+
+# Configuracion con credenciales
+**/App.config
